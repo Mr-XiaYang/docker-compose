@@ -1,3 +1,7 @@
 .DS_Store
 
-.\local-db\*
+local-db/mysql5/*
+!local-db/mysql5/conf.d/mysql5
+
+local-db/redis
+!local-db/redis/redis.conf
