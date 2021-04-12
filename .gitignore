@@ -5,3 +5,6 @@ local-db/mysql5/*
 
 local-db/redis
 !local-db/redis/redis.conf
+
+nginx-server/ssl-cerf/*
+!nginx-server/ssl-cerf/.gitkeep
