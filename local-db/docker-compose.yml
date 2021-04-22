@@ -10,9 +10,9 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./mysql5/data:/var/lib/mysql:rw
-      - ./mysql5/conf.d:/etc/mysql/conf.d:rw
-      - ./mysql5/logs:/var/log/mysql:rw
+      - localDB:/var/lib/mysql:rw
+      - localDB:/etc/mysql/conf.d:rw
+      - localDB:/var/log/mysql:rw
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - TZ="Asia/Shanghai"
@@ -34,5 +34,8 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - ./redis/data:/data:rw
-      - ./redis:/usr/local/etc/redis:rw
+      - localDB:/data:rw
+      - localDB:/usr/local/etc/redis:rw
+
+volumes:
+  localDB:

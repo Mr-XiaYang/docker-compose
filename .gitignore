@@ -8,3 +8,5 @@ local-db/redis
 
 nginx-server/ssl-cerf/*
 !nginx-server/ssl-cerf/.gitkeep
+
+jetbrains-server/msmtpd-passwd.env
