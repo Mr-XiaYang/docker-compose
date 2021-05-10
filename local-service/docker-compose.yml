@@ -1,0 +1,114 @@
+version: "3"
+
+services:
+  mongo:
+    container_name: mongo-db
+    image: mongo:4
+    restart: on-failure
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports: 
+      - 27017:27017
+    volumes: 
+      - ./mongo/data:/data/db:rw
+
+  mysql:
+    container_name: mysql-db
+    image: mysql:5
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/data:/var/lib/mysql:rw
+      - ./mysql/conf:/etc/mysql/conf.d:rw
+      - ./mysql/log:/var/log/mysql:rw
+
+  redis:
+    container_name: redis-db
+    image: redis:6-alpine
+    restart: on-failure
+    command: redis-server /etc/redis/redis.conf --appendonly yes    
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis/data:/data:rw
+      - ./redis/conf:/etc/redis:rw
+  
+  nginx:
+    container_name: nginx
+    image: nginx:stable-alpine
+    restart: on-failure
+    ports:
+      - 80:80
+      - 443:443
+    volumes: 
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf:rw
+      - ./nginx/conf/common:/etc/nginx/common:rw
+      - ./nginx/conf/sites-enabled:/etc/nginx/sites-enabled:rw
+      - ./nginx/log:/var/log/nginx:rw
+  
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:alpine
+    restart: on-failure
+    environment: 
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes: 
+      - ./rabbitmq/conf:/etc/rabbitmq:rw
+      - ./rabbitmq/data:/var/lib/rabbitmq:rw
+      - ./rabbitmq/log:/var/log/rabbitmq:rw
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:7.12.1
+    restart: on-failure
+    environment: 
+      - "discovery.type=single-node"
+      - "cluster.name=elasticsearch"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports: 
+      - 9200:9200
+      - 9300:9300
+    volumes: 
+      - ./elasticsearch/data:/usr/share/elasticsearch/data:rw
+      - ./elasticsearch/plugins:/usr/share/elasticsearch/plugins:rw
+  
+  logstash:
+    container_name: logstash
+    image: logstash:7.12.1
+    restart: on-failure
+    depends_on:
+      - elasticsearch
+    links: 
+      - elasticsearch:elasticsearch
+    environment: 
+      - TZ=Asia/Shanghai
+    ports: 
+      - 4560:4560
+      - 4561:4561
+      - 4562:4562
+      - 4563:4563
+    volumes: 
+      - ./logstash/conf:/usr/share/logstash/config:rw
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:rw
+
+  kibana:
+    container_name: kibana
+    image: kibana:7.12.1
+    restart: on-failure
+    depends_on: 
+      - elasticsearch
+    links: 
+      - elasticsearch:elasticsearch
+    environment: 
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - 5601:5601
