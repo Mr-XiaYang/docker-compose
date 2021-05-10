@@ -1,5 +1,7 @@
 .DS_Store
 
+jetbrains-server/msmtpd-passwd.env
+
 local-service/mongo/*
 
 local-service/mysql/*
@@ -16,14 +18,3 @@ local-service/rabbitmq/*
 
 local-service/elasticsearch/*
 !local-service/elasticsearch/plugins
-
-local-db/mysql5/*
-!local-db/mysql5/conf.d/mysql5
-
-local-db/redis
-!local-db/redis/redis.conf
-
-nginx-server/ssl-cerf/*
-!nginx-server/ssl-cerf/.gitkeep
-
-jetbrains-server/msmtpd-passwd.env
