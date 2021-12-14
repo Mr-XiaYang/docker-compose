@@ -3,7 +3,7 @@ services:
   mysql:
     container_name: mysql-db
     image: 'mysql:5'
-    restart: on-failure
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
