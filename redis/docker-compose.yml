@@ -4,9 +4,9 @@ services:
     container_name: redis-db
     image: redis:6-alpine
     restart: always
-    command: redis-server /etc/redis/redis.conf --appendonly yes    
+    command: redis-server --appendonly yes    
     ports:
       - 6379:6379
     volumes:
       - ./data:/data
-      - ./conf:/etc/redis
+
