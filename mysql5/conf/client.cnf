@@ -1,5 +1,0 @@
-[client]
-
-socket=/var/run/mysqld/mysqld.sock
-
-default-character-set=utf8mb4

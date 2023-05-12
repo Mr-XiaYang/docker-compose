@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  ddns:
+    container_name: cloudflare-ddns
+    image: timothyjmiller/cloudflare-ddns:latest
+    restart: unless-stopped
+    
+    labels:
+      - net.unraid.docker.managed=dockerman
+      - net.unraid.docker.icon='https://github.com/kilrah/unraid-docker-templates/raw/main/icons/cloudflare-ddns-config.png'
+
+    network_mode: 'bridge'
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ="Asia/Shanghai"
+      - HOST_OS="Unraid"
+      - HOST_HOSTNAME="unraid"
+      - HOST_CONTAINERNAME="cloudflare-ddns"
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /mnt/user/appdata/cloudflare-ddns-config/config.json:/config.json
+    
