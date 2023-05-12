@@ -20,5 +20,5 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - /mnt/user/appdata/cloudflare-ddns-config/config.json:/config.json
+      - ./cloudflare-ddns/config.json:/config.json
     
