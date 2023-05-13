@@ -21,4 +21,24 @@ services:
       - no-new-privileges:true
     volumes:
       - ./cloudflare-ddns/config.json:/config.json
-    
+  vpn:
+    container_name: Tailscale
+    image: deasmi/unraid-tailscale:latest
+    network_mode: "host"
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ="Asia/Shanghai"
+      - HOST_OS="Unraid"
+      - HOST_HOSTNAME="unraid"
+      - HOST_CONTAINERNAME="cloudflare-ddns"
+      - ENABLE_DOWNLOADS='TRUE'
+      - UP_FLAGS=""
+    volumes:
+      - ./tailscale:/state:rw
+      - ./tailscale/downloads:/downloads:rw
+    labels:
+      - net.unraid.docker.managed=dockerman
+      - net.unraid.docker.icon='https://raw.githubusercontent.com/deasmi/unraid-tailscale/master/logo.png'
