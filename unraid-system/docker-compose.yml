@@ -25,6 +25,7 @@ services:
     container_name: Tailscale
     image: deasmi/unraid-tailscale:latest
     network_mode: "host"
+    privileged: true
     security_opt:
       - no-new-privileges:true
     environment:
