@@ -36,7 +36,7 @@ services:
       - HOST_HOSTNAME="unraid"
       - HOST_CONTAINERNAME="cloudflare-ddns"
       - ENABLE_DOWNLOADS='TRUE'
-      - UP_FLAGS=""
+      - UP_FLAGS="--advertise-exit-node --advertise-routes=192.168.10.0/24"
     volumes:
       - ./tailscale:/state:rw
       - ./tailscale/downloads:/downloads:rw
