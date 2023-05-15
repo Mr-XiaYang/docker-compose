@@ -7,16 +7,16 @@ services:
     
     labels:
       - net.unraid.docker.managed=dockerman
-      - net.unraid.docker.icon='https://github.com/kilrah/unraid-docker-templates/raw/main/icons/cloudflare-ddns-config.png'
+      - net.unraid.docker.icon=https://github.com/kilrah/unraid-docker-templates/raw/main/icons/cloudflare-ddns-config.png
 
-    network_mode: 'bridge'
+    network_mode: bridge
     environment:
       - PUID=99
       - PGID=100
-      - TZ="Asia/Shanghai"
-      - HOST_OS="Unraid"
-      - HOST_HOSTNAME="unraid"
-      - HOST_CONTAINERNAME="cloudflare-ddns"
+      - TZ=Asia/Shanghai
+      - HOST_OS=Unraid
+      - HOST_HOSTNAME=unraid
+      - HOST_CONTAINERNAME=cloudflare-ddns
     security_opt:
       - no-new-privileges:true
     volumes:
@@ -24,22 +24,24 @@ services:
   vpn:
     container_name: Tailscale
     image: deasmi/unraid-tailscale:latest
-    network_mode: "host"
+    network_mode: bridge
     privileged: true
     security_opt:
       - no-new-privileges:true
+    ports:
+      - 41641:41641
     environment:
       - PUID=99
       - PGID=100
-      - TZ="Asia/Shanghai"
-      - HOST_OS="Unraid"
-      - HOST_HOSTNAME="unraid"
-      - HOST_CONTAINERNAME="cloudflare-ddns"
+      - TZ=Asia/Shanghai
+      - HOST_OS=Unraid
+      - HOST_HOSTNAME=unraid
+      - HOST_CONTAINERNAME=cloudflare-ddns
       - ENABLE_DOWNLOADS='TRUE'
-      - UP_FLAGS="--advertise-exit-node --advertise-routes=192.168.10.0/24"
+      - UP_FLAGS=--advertise-exit-node --advertise-routes=192.168.10.0/24
     volumes:
       - ./tailscale:/state:rw
       - ./tailscale/downloads:/downloads:rw
     labels:
       - net.unraid.docker.managed=dockerman
-      - net.unraid.docker.icon='https://raw.githubusercontent.com/deasmi/unraid-tailscale/master/logo.png'
+      - net.unraid.docker.icon=https://raw.githubusercontent.com/deasmi/unraid-tailscale/master/logo.png
