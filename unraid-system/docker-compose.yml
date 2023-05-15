@@ -24,12 +24,10 @@ services:
   vpn:
     container_name: Tailscale
     image: deasmi/unraid-tailscale:latest
-    network_mode: bridge
+    network_mode: host
     privileged: true
     security_opt:
       - no-new-privileges:true
-    ports:
-      - 41641:41641
     environment:
       - PUID=99
       - PGID=100
