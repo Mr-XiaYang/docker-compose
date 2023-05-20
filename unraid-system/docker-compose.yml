@@ -48,10 +48,10 @@ services:
       - net.unraid.docker.icon=https://raw.githubusercontent.com/deasmi/unraid-tailscale/master/logo.png
   
   sync:
-    image: tickstep/aliyunpan-sync:latest
+    image: tickstep/aliyunpan-sync:v0.2.7
     container_name: aliyunpan-sync
     restart: unless-stopped
-
+    network_mode: bridge
     volumes:
       - ./aliyunpan-sync:/home/app/config
       - /mnt/user/data:/home/app/data:rw
