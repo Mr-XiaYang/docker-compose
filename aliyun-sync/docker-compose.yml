@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  sync-media:
+    image: tickstep/aliyunpan-sync:v0.2.7
+    container_name: aliyunpan-sync
+    restart: unless-stopped
+    network_mode: bridge
+    volumes:
+      - ./config/aliyunpan-sync:/home/app/config
+      - /mnt/user/media/movies:/home/app/data/movies:rw
+    environment:
+      - HOST_CONTAINERNAME=aliyunpan-sync
+      - ALIYUNPAN_REFRESH_TOKEN=${ALIYUNPAN_REFRESH_TOKEN}
+      - ALIYUNPAN_TRANSFER_URL_TYPE=1
+      - ALIYUNPAN_DOWNLOAD_PARALLEL=2
+      - ALIYUNPAN_DOWNLOAD_BLOCK_SIZE=10240
+      - ALIYUNPAN_UPLOAD_PARALLEL=2
+      - ALIYUNPAN_UPLOAD_BLOCK_SIZE=10240
+      - ALIYUNPAN_PAN_DIR=/nas/media
+      - ALIYUNPAN_SYNC_MODE=sync
+      - ALIYUNPAN_SYNC_PRIORITY=time
+      - ALIYUNPAN_SYNC_LOG=true
+      - ALIYUNPAN_LOCAL_DELAY_TIME=10
+      - ALIYUNPAN_TASK_STEP=sync
+
