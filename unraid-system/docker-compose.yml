@@ -15,7 +15,7 @@ services:
     security_opt:
       - no-new-privileges:true
     volumes:
-      - ./config/cloudflare-ddns/config.json:/config.json
+      - ${DEFAULT_CONFIG_DIR}/cloudflare-ddns/config.json:/config.json
 
   tailscale:
     image: deasmi/unraid-tailscale:latest
@@ -30,8 +30,8 @@ services:
       - ENABLE_DOWNLOADS=TRUE
       - UP_FLAGS=${TAILSCALE_UP_FLAGS}
     volumes:
-      - ./tailscale:/state:rw
-      - ./tailscale/downloads:/downloads:rw
+      - ${DEFAULT_CONFIG_DIR}/tailscale:/state:rw
+      - ${DEFAULT_CONFIG_DIR}/tailscale/downloads:/downloads:rw
     labels:
       - net.unraid.docker.managed=dockerman
       - net.unraid.docker.icon=https://raw.githubusercontent.com/deasmi/unraid-tailscale/master/logo.png
