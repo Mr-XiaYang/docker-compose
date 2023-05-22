@@ -3,15 +3,10 @@ services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
+    restart: unless-stopped
     network_mode: bridge
     environment:
-      - TZ=Asia/Shanghai
-      - HOST_OS=Unraid
-      - HOST_HOSTNAME=unraid
       - HOST_CONTAINERNAME=prowlarr
-      - PUID=99
-      - PGID=100
-      - UMASK=022
     labels:
       - net.unraid.docker.managed=dockerman
       - net.unraid.docker.webui=http://[IP]:[PORT:9696]/system/status
@@ -19,4 +14,4 @@ services:
     ports:
       - 9696:9696/tcp
     volumes:
-      - ./config/prowlarr:/config:rw
+      - ${DEFAULT_CONFIG_DIR}/prowlarr:/config:rw
